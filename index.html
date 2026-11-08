@@ -108,7 +108,7 @@
     .demo-grid {
       display: flex;
       justify-content: center;
-      align-items: stretch;
+      align-items: center;
       gap: 1rem;
       flex-wrap: wrap;
       margin-top: 1rem;
@@ -116,7 +116,24 @@
     .demo-grid figure {
       flex: 1 1 280px;
       margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
+    }
+    .demo-grid video {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      background: #0f172a;
+      display: block;
+    }
+    .demo-grid figure:first-child video {
+      width: 60.5%;
+    }
+    .demo-grid figcaption {
+      width: 100%;
+      min-height: 3.2em;
     }
     figure.paper-fig img {
       width: 100%;
@@ -124,58 +141,27 @@
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
+    figure.table-shot {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    figure.table-shot img {
+      width: auto;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: none;
+      border-radius: 0;
+    }
+    figure.table-shot.narrow img {
+      max-width: 500px;
+    }
+    figure.table-shot.wide img {
+      max-width: 680px;
+    }
     figcaption {
       margin-top: 0.6em;
       color: #475569;
-    }
-    .table-scroll {
-      overflow-x: auto;
-      margin: 0.5rem 0 1.75rem;
-      text-align: left;
-    }
-    .paper-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.82rem;
-      background: #fff;
-      line-height: 1.35;
-    }
-    .paper-table caption {
-      caption-side: bottom;
-      text-align: left;
-      color: #475569;
-      padding-top: 0.7rem;
-      font-size: 0.95rem;
-      line-height: 1.45;
-      white-space: normal;
-    }
-    .paper-table th,
-    .paper-table td {
-      border-bottom: 1px solid #e2e8f0;
-      padding: 0.32rem 0.45rem;
-      text-align: right;
-      white-space: nowrap;
-    }
-    .paper-table th:first-child,
-    .paper-table td:first-child,
-    .paper-table .left {
-      text-align: left;
-    }
-    .paper-table thead th {
-      border-bottom: 2px solid #1e293b;
-      color: #0f172a;
-    }
-    .paper-table .group td {
-      text-align: left;
-      font-style: italic;
-      font-weight: 600;
-      background: #f8fafc;
-      color: #334155;
-      padding-top: 0.85rem;
-    }
-    .paper-table code {
-      background: transparent !important;
-      font-size: 0.85em;
     }
   </style>
 </head>
@@ -343,47 +329,9 @@
           </figcaption>
         </figure>
 
-        <div class="table-scroll">
-          <table class="paper-table">
-            <thead>
-              <tr>
-                <th>Primitive</th>
-                <th class="left">Role</th>
-                <th>Calls</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><code>move_to_and_grasp</code></td>
-                <td class="left">Approach and grasp an object</td>
-                <td>11,643</td>
-              </tr>
-              <tr>
-                <td><code>place_and_release</code></td>
-                <td class="left">Place a held object, then release</td>
-                <td>8,403</td>
-              </tr>
-              <tr>
-                <td><code>move_to_and_pull</code></td>
-                <td class="left">Pull a drawer or door open</td>
-                <td>1,052</td>
-              </tr>
-              <tr>
-                <td><code>rotate_and_release</code></td>
-                <td class="left">Rotate a held knob, then release</td>
-                <td>488</td>
-              </tr>
-              <tr>
-                <td><code>move_to_and_press</code></td>
-                <td class="left">Push a drawer or door shut, or press a button</td>
-                <td>185</td>
-              </tr>
-            </tbody>
-            <caption>
-              <strong>Table 1.</strong> Primitive vocabulary of LIBERO-Atomic. Every primitive takes a target object, and <code>place_and_release</code> also takes a relation (<code>on</code>, <code>in</code>, or <code>under</code>) and a target. Pull and press are executed with the gripper open. Calls count <code>vla_execute_atomic</code> invocations in the LIBERO-PRO evaluation (4,000 episodes, including retries).
-            </caption>
-          </table>
-        </div>
+        <figure class="paper-fig image table-shot narrow">
+          <img src="static/images/tables/1.png" alt="Table 1. Primitive vocabulary of LIBERO-Atomic.">
+        </figure>
       </div>
     </div>
   </div>
@@ -402,16 +350,12 @@
           <span class="label">&pi;<sub>0.5</sub> LIBERO avg, five-suite</span>
         </div>
         <div class="result-stat">
-          <span class="value">+4.2</span>
-          <span class="label">X-VLA on LIBERO-Long</span>
-        </div>
-        <div class="result-stat">
           <span class="value">+7.28</span>
-          <span class="label">&pi;<sub>0.5</sub> LIBERO-PRO mean</span>
+          <span class="label">&pi;<sub>0.5</sub> on LIBERO-PRO</span>
         </div>
         <div class="result-stat">
-          <span class="value">53.3%</span>
-          <span class="label">Real robot, three layouts</span>
+          <span class="value">+16.7</span>
+          <span class="label">Real-robot success</span>
         </div>
       </div>
 
@@ -421,38 +365,9 @@
           RoboDuo improves both frozen backbones without lowering any suite. Under four-suite training, X-VLA rises from <strong>95.25</strong> to <strong>96.40</strong> (Long: 87.4 &rarr; 91.6) and &pi;<sub>0.5</sub> from <strong>97.25</strong> to <strong>98.40</strong> (Long: 93.6 &rarr; 96.2). On Long, that removes 33% of X-VLA's failures and 41% of &pi;<sub>0.5</sub>'s. Under five-suite training the bases are already stronger, so the gains shrink to X-VLA <strong>97.65 &rarr; 97.95</strong> and &pi;<sub>0.5</sub> <strong>98.30 &rarr; 98.45</strong>, again mainly on Long.
         </p>
       </div>
-      <div class="table-scroll">
-        <table class="paper-table">
-          <thead>
-            <tr>
-              <th>Method</th><th>Spatial</th><th>Object</th><th>Goal</th><th>Long</th><th>Avg.</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>&pi;<sub>0</sub></td><td>98.0</td><td>96.8</td><td>94.4</td><td>88.4</td><td>94.4</td></tr>
-            <tr><td>&pi;<sub>0.5</sub></td><td>98.8</td><td>98.2</td><td>98.0</td><td>92.4</td><td>96.9</td></tr>
-            <tr><td>InternVLA-M1</td><td>98.0</td><td>99.0</td><td>93.8</td><td>92.6</td><td>95.9</td></tr>
-            <tr><td>GR00T-N1.7</td><td>97.7</td><td>98.5</td><td>97.5</td><td>94.4</td><td>97.0</td></tr>
-            <tr><td>OpenVLA-OFT</td><td>97.6</td><td>98.4</td><td>97.9</td><td>94.5</td><td>97.1</td></tr>
-            <tr><td>Fast-WAM</td><td>98.2</td><td>100.0</td><td>97.0</td><td>95.2</td><td>97.6</td></tr>
-            <tr><td>Motus</td><td>96.8</td><td>99.8</td><td>96.6</td><td>97.6</td><td>97.7</td></tr>
-            <tr><td>Being-H0.5</td><td>99.2</td><td>98.2</td><td>99.0</td><td>96.2</td><td>98.2</td></tr>
-            <tr class="group"><td colspan="6">Four-suite training (our evaluation)</td></tr>
-            <tr><td>X-VLA (reproduced)</td><td>96.2</td><td>99.6</td><td>97.8</td><td>87.4</td><td>95.25</td></tr>
-            <tr><td>RoboDuo + X-VLA</td><td>96.6</td><td>99.6</td><td>97.8</td><td>91.6</td><td>96.40</td></tr>
-            <tr><td>&pi;<sub>0.5</sub> (reproduced)</td><td>99.4</td><td>98.0</td><td>98.0</td><td>93.6</td><td>97.25</td></tr>
-            <tr><td>RoboDuo + &pi;<sub>0.5</sub></td><td>99.6</td><td>99.0</td><td>98.8</td><td>96.2</td><td><strong>98.40</strong></td></tr>
-            <tr class="group"><td colspan="6">Five-suite training (our evaluation)</td></tr>
-            <tr><td>X-VLA (reproduced)</td><td>97.2</td><td>99.0</td><td>98.6</td><td>95.8</td><td>97.65</td></tr>
-            <tr><td>RoboDuo + X-VLA</td><td>97.4</td><td>99.2</td><td>98.6</td><td>96.6</td><td>97.95</td></tr>
-            <tr><td>&pi;<sub>0.5</sub> (reproduced)</td><td>99.4</td><td>99.8</td><td>98.6</td><td>95.4</td><td>98.30</td></tr>
-            <tr><td>RoboDuo + &pi;<sub>0.5</sub></td><td>99.4</td><td>99.8</td><td>98.6</td><td>96.0</td><td><strong>98.45</strong></td></tr>
-          </tbody>
-          <caption>
-            <strong>Table 2.</strong> LIBERO success rate (%). The upper block lists published numbers (not rerun). The middle and lower blocks are our evaluation under four- and five-suite training, each backbone alone and with RoboDuo on the same weights. Bold marks the best average within each of our training blocks.
-          </caption>
-        </table>
-      </div>
+      <figure class="paper-fig image table-shot narrow">
+          <img src="static/images/tables/2.png" alt="Table 2. LIBERO success rate.">
+        </figure>
 
       <h3 class="title is-4" style="margin-top:2rem;">Evaluation on LIBERO-PRO</h3>
       <div class="content has-text-justified">
@@ -460,41 +375,9 @@
           The same checkpoints are tested zero-shot under position swap (S) and task (T) perturbations. Under four-suite training, RoboDuo raises the eight-condition mean of &pi;<sub>0.5</sub> from <strong>32.05</strong> to <strong>39.33</strong>. The largest gains are Object-T (+30.6, 25.2 &rarr; 55.8) and Object-S (+11.0). X-VLA moves only from 4.95 to 5.70: conditions where its base is zero stay at or below 0.4. Under five-suite training, &pi;<sub>0.5</sub> rises from <strong>43.58</strong> to <strong>45.68</strong>, again led by Object-T (32.2 &rarr; 42.2), and X-VLA from 7.25 to 8.50. No cell falls below its base.
         </p>
       </div>
-      <div class="table-scroll">
-        <table class="paper-table">
-          <thead>
-            <tr>
-              <th>Method</th>
-              <th>Spatial-S</th><th>Spatial-T</th>
-              <th>Object-S</th><th>Object-T</th>
-              <th>Goal-S</th><th>Goal-T</th>
-              <th>Long-S</th><th>Long-T</th>
-              <th>Mean</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>OpenVLA</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.00</td></tr>
-            <tr><td>&pi;<sub>0</sub></td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.00</td></tr>
-            <tr><td>&pi;<sub>0.5</sub></td><td>20.0</td><td>1.0</td><td>17.0</td><td>1.0</td><td>38.0</td><td>0.0</td><td>8.0</td><td>1.0</td><td>10.75</td></tr>
-            <tr><td>MolmoAct</td><td>0.0</td><td>0.0</td><td>6.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>6.0</td><td>1.50</td></tr>
-            <tr><td>NORA</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.00</td></tr>
-            <tr><td>X-VLA</td><td>0.0</td><td>0.0</td><td>2.0</td><td>8.0</td><td>1.0</td><td>9.0</td><td>0.0</td><td>10.0</td><td>3.75</td></tr>
-            <tr class="group"><td colspan="10">Four-suite training (our evaluation)</td></tr>
-            <tr><td>X-VLA (reproduced)</td><td>0.0</td><td>18.0</td><td>0.0</td><td>0.0</td><td>2.6</td><td>9.2</td><td>0.0</td><td>9.8</td><td>4.95</td></tr>
-            <tr><td>RoboDuo + X-VLA</td><td>0.2</td><td>18.0</td><td>0.0</td><td>0.0</td><td>3.2</td><td>10.2</td><td>0.4</td><td>13.6</td><td>5.70</td></tr>
-            <tr><td>&pi;<sub>0.5</sub> (reproduced)</td><td>63.6</td><td>60.6</td><td>20.0</td><td>25.2</td><td>39.0</td><td>24.2</td><td>12.6</td><td>11.2</td><td>32.05</td></tr>
-            <tr><td>RoboDuo + &pi;<sub>0.5</sub></td><td>67.8</td><td><strong>61.0</strong></td><td>31.0</td><td><strong>55.8</strong></td><td>39.8</td><td>26.2</td><td><strong>15.6</strong></td><td>17.4</td><td>39.33</td></tr>
-            <tr class="group"><td colspan="10">Five-suite training (our evaluation)</td></tr>
-            <tr><td>X-VLA (reproduced)</td><td>2.0</td><td>16.0</td><td>2.0</td><td>6.0</td><td>0.0</td><td>12.0</td><td>0.0</td><td>20.0</td><td>7.25</td></tr>
-            <tr><td>RoboDuo + X-VLA</td><td>2.0</td><td>18.0</td><td>4.0</td><td>6.0</td><td>0.0</td><td>12.0</td><td>0.0</td><td>26.0</td><td>8.50</td></tr>
-            <tr><td>&pi;<sub>0.5</sub> (reproduced)</td><td>70.0</td><td>55.0</td><td>49.2</td><td>32.2</td><td>44.2</td><td>34.6</td><td>13.6</td><td>49.8</td><td>43.58</td></tr>
-            <tr><td>RoboDuo + &pi;<sub>0.5</sub></td><td><strong>71.6</strong></td><td>55.0</td><td><strong>50.8</strong></td><td>42.2</td><td><strong>45.4</strong></td><td><strong>35.0</strong></td><td>15.2</td><td><strong>50.2</strong></td><td><strong>45.68</strong></td></tr>
-          </tbody>
-          <caption>
-            <strong>Table 3.</strong> LIBERO-PRO success rate (%). S is the position perturbation and T is the task perturbation. The upper block uses the official file-name prompting protocol. Our rows condition on the BDDL language field, which matches the scored goal. Mean is the average of the eight columns. Bold marks the best result in each column.
-          </caption>
-        </table>
-      </div>
+      <figure class="paper-fig image table-shot wide">
+          <img src="static/images/tables/3.png" alt="Table 3. LIBERO-PRO success rate.">
+        </figure>
 
       <h3 class="title is-4" style="margin-top:2rem;">Effect of the Coding Agent</h3>
       <div class="content has-text-justified">
@@ -502,37 +385,9 @@
           The frozen &pi;<sub>0.5</sub> policies and the retry budget stay fixed; only the coding agent changes. Every agent raises the eight-condition mean, and the mean varies by up to 5.8 points across agents. Under four-suite training the fine-tuned agent reaches <strong>39.33</strong>, GPT <strong>41.50</strong>, and GPT + TAMP <strong>43.00</strong>. Under five-suite training the same order holds: <strong>45.68</strong>, <strong>49.75</strong>, and <strong>51.50</strong>. GPT cells use 50 episodes per cell, so gaps of a few points are trends rather than a strict ranking.
         </p>
       </div>
-      <div class="table-scroll">
-        <table class="paper-table">
-          <thead>
-            <tr>
-              <th>Coding agent</th>
-              <th>Spatial-S</th><th>Spatial-T</th>
-              <th>Object-S</th><th>Object-T</th>
-              <th>Goal-S</th><th>Goal-T</th>
-              <th>Long-S</th><th>Long-T</th>
-              <th>Mean-6</th><th>Mean-8</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>Cap-X</td><td>12.0</td><td>14.0</td><td>22.0</td><td>18.0</td><td>26.0</td><td>17.0</td><td>&ndash;</td><td>&ndash;</td><td>18.17</td><td>&ndash;</td></tr>
-            <tr><td>Pigey</td><td>66.0</td><td>80.0</td><td>54.0</td><td>54.0</td><td>44.0</td><td>22.0</td><td>&ndash;</td><td>&ndash;</td><td>53.33</td><td>&ndash;</td></tr>
-            <tr class="group"><td colspan="11">Four-suite training (our evaluation)</td></tr>
-            <tr><td>None (frozen &pi;<sub>0.5</sub>)</td><td>63.6</td><td>60.6</td><td>20.0</td><td>25.2</td><td>39.0</td><td>24.2</td><td>12.6</td><td>11.2</td><td>38.77</td><td>32.05</td></tr>
-            <tr><td>LIBERO-Code fine-tuned</td><td>67.8</td><td>61.0</td><td>31.0</td><td><strong>55.8</strong></td><td>39.8</td><td>26.2</td><td>15.6</td><td>17.4</td><td>46.93</td><td>39.33</td></tr>
-            <tr><td>GPT</td><td>68.0</td><td>60.0</td><td><strong>36.0</strong></td><td>54.0</td><td>38.0</td><td>34.0</td><td><strong>20.0</strong></td><td>22.0</td><td>48.33</td><td>41.50</td></tr>
-            <tr><td>GPT + TAMP</td><td><strong>74.0</strong></td><td><strong>64.0</strong></td><td>30.0</td><td>54.0</td><td><strong>40.0</strong></td><td><strong>36.0</strong></td><td><strong>20.0</strong></td><td><strong>26.0</strong></td><td><strong>49.67</strong></td><td><strong>43.00</strong></td></tr>
-            <tr class="group"><td colspan="11">Five-suite training (our evaluation)</td></tr>
-            <tr><td>None (frozen &pi;<sub>0.5</sub>)</td><td>70.0</td><td>55.0</td><td>49.2</td><td>32.2</td><td>44.2</td><td>34.6</td><td>13.6</td><td>49.8</td><td>47.53</td><td>43.58</td></tr>
-            <tr><td>LIBERO-Code fine-tuned</td><td>71.6</td><td>55.0</td><td>50.8</td><td>42.2</td><td>45.4</td><td>35.0</td><td>15.2</td><td>50.2</td><td>50.00</td><td>45.68</td></tr>
-            <tr><td>GPT</td><td>72.0</td><td>56.0</td><td><strong>60.0</strong></td><td><strong>54.0</strong></td><td>48.0</td><td>38.0</td><td>16.0</td><td><strong>54.0</strong></td><td>54.67</td><td>49.75</td></tr>
-            <tr><td>GPT + TAMP</td><td><strong>76.0</strong></td><td><strong>58.0</strong></td><td><strong>60.0</strong></td><td>48.0</td><td><strong>58.0</strong></td><td><strong>42.0</strong></td><td><strong>20.0</strong></td><td>50.0</td><td><strong>57.00</strong></td><td><strong>51.50</strong></td></tr>
-          </tbody>
-          <caption>
-            <strong>Table 4.</strong> Effect of the coding agent on LIBERO-PRO (%). Every RoboDuo row uses frozen &pi;<sub>0.5</sub> as the full-task VLA, with the same atomic VLA and retry budget. GPT denotes GPT-6-Astra. Mean-6 averages Spatial, Object, and Goal; Mean-8 averages all eight columns. Cap-X and Pigey are published references that omit Long. Bold marks the best result within each backbone block.
-          </caption>
-        </table>
-      </div>
+      <figure class="paper-fig image table-shot wide">
+          <img src="static/images/tables/4.png" alt="Table 4. Effect of the coding agent on LIBERO-PRO.">
+        </figure>
 
       <h3 class="title is-4" style="margin-top:2rem;">Real Robot</h3>
       <div class="content has-text-justified">
@@ -546,29 +401,9 @@
           <strong>Figure 4.</strong> Real-world RoboDuo on a bimanual AgileX Piper. Blue is the frozen full-task attempt, red is a failed completion check, and orange is recovery by the frozen atomic VLA.
         </figcaption>
       </figure>
-      <div class="table-scroll">
-        <table class="paper-table">
-          <thead>
-            <tr>
-              <th>Layout</th>
-              <th class="left">Method</th>
-              <th>Success (%)</th>
-              <th>Fruits (/4)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>1</td><td class="left">Full-task VLA</td><td>40</td><td>2.4</td></tr>
-            <tr><td>1</td><td class="left">RoboDuo</td><td><strong>60</strong></td><td><strong>3.0</strong></td></tr>
-            <tr><td>2</td><td class="left">Full-task VLA</td><td>30</td><td>1.9</td></tr>
-            <tr><td>2</td><td class="left">RoboDuo</td><td><strong>60</strong></td><td><strong>2.8</strong></td></tr>
-            <tr><td>3</td><td class="left">Full-task VLA</td><td>40</td><td>1.8</td></tr>
-            <tr><td>3</td><td class="left">RoboDuo</td><td>40</td><td><strong>2.6</strong></td></tr>
-          </tbody>
-          <caption>
-            <strong>Table 5.</strong> Real-world fruit arrangement on a bimanual AgileX Piper. Success rate and mean fruit count over 10 trials per method and layout. Success requires all four fruits in the basket.
-          </caption>
-        </table>
-      </div>
+      <figure class="paper-fig image table-shot narrow">
+          <img src="static/images/tables/5.png" alt="Table 5. Real-world fruit arrangement.">
+        </figure>
     </div>
   </div>
   </div>
@@ -579,33 +414,18 @@
   <div class="columns is-centered has-text-centered">
     <div class="column is-four-fifths">
       <h2 class="title is-3">Demos</h2>
-      <div class="content has-text-justified">
-        <p>
-          Simulation and real-robot demos will be added here. Drop videos into <code>static/videos/</code> and replace the placeholders below.
-        </p>
-      </div>
-
-      <h3 class="title is-4">Simulation</h3>
       <div class="demo-grid">
         <figure>
-          <div class="demo-placeholder">Sim demo placeholder<br><small>e.g. LIBERO / LIBERO-PRO rollout</small></div>
-          <figcaption class="has-text-centered is-size-6">Simulation demo 1</figcaption>
+          <video controls playsinline preload="metadata">
+            <source src="drawer_bowl_43_annotated.mp4" type="video/mp4">
+          </video>
+          <figcaption class="has-text-centered is-size-6">Simulation: open the drawer and put the bowl inside</figcaption>
         </figure>
         <figure>
-          <div class="demo-placeholder">Sim demo placeholder<br><small>e.g. failure &rarr; atomic recovery</small></div>
-          <figcaption class="has-text-centered is-size-6">Simulation demo 2</figcaption>
-        </figure>
-      </div>
-
-      <h3 class="title is-4" style="margin-top:2rem;">Real Robot</h3>
-      <div class="demo-grid">
-        <figure>
-          <div class="demo-placeholder">Real-robot demo placeholder<br><small>e.g. fruit arrangement</small></div>
-          <figcaption class="has-text-centered is-size-6">Real-robot demo 1</figcaption>
-        </figure>
-        <figure>
-          <div class="demo-placeholder">Real-robot demo placeholder<br><small>e.g. recovery after drop</small></div>
-          <figcaption class="has-text-centered is-size-6">Real-robot demo 2</figcaption>
+          <video controls playsinline preload="metadata">
+            <source src="RoboDuo-Demo-1-2_annotated_v3.mp4" type="video/mp4">
+          </video>
+          <figcaption class="has-text-centered is-size-6">Real robot: place the four fruits into the basket</figcaption>
         </figure>
       </div>
     </div>
