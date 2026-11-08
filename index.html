@@ -27,10 +27,14 @@
     .section-container {
       width: 100%;
       margin: 0 auto;
-      padding: 2rem 0;
+      padding: 2rem 0 0;
       color: #333;
       line-height: 1.6;
     }
+    .section-container .content-block:last-child { margin-bottom: 0; }
+    /* Motivation already sits inside a padded section, so the next
+       section should not add another full top pad. */
+    .section + .section { padding-top: 0.75rem; }
     .subsection-title {
       font-size: 1.25rem;
       font-weight: 600;
@@ -401,9 +405,6 @@
           <strong>Figure 4.</strong> Real-world RoboDuo on a bimanual AgileX Piper. Blue is the frozen full-task attempt, red is a failed completion check, and orange is recovery by the frozen atomic VLA.
         </figcaption>
       </figure>
-      <figure class="paper-fig image table-shot narrow">
-          <img src="static/images/tables/5.png" alt="Table 5. Real-world fruit arrangement.">
-        </figure>
     </div>
   </div>
   </div>
